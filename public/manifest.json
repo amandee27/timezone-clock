@@ -3,7 +3,7 @@
   "name": "Timezone Clock",
   "version": "1.0.0",
   "description": "A real-time multi-timezone world clock for your new tab",
-  "permissions": ["storage"],
+  "permissions": [],
   "icons": {
     "16": "icon16.png",
     "48": "icon48.png",
