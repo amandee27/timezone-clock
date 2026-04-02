@@ -7,36 +7,54 @@ function SettingsProvider({ children }: { children: React.ReactNode }) {
   const [clockSettings, setClockSettings] = useState<ClockSettings>(
     defaultSettings.clockSettings
   );
+
   useEffect(() => {
     const clockSettingItem = localStorage.getItem("clockSettings");
     const clockSettingsObj = clockSettingItem && JSON.parse(clockSettingItem);
 
     if (clockSettingsObj) {
-      setClockSettings({
+      const loaded: ClockSettings = {
         theme: clockSettingsObj["clockTheme"],
         showNumbers: clockSettingsObj["showNumbers"],
-      });
+        darkMode: clockSettingsObj["darkMode"] ?? true,
+      };
+      setClockSettings(loaded);
+      applyDarkMode(loaded.darkMode);
     } else {
       localStorage.setItem(
         "clockSettings",
         JSON.stringify({
           clockTheme: clockSettings.theme,
           showNumbers: clockSettings.showNumbers,
+          darkMode: clockSettings.darkMode,
         })
       );
+      applyDarkMode(clockSettings.darkMode);
     }
   }, []);
+
+  const applyDarkMode = (isDark: boolean) => {
+    if (isDark) {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  };
+
   return (
     <SettingsContext
       value={{
         clockSettings,
-        updateSettings: ({ theme, showNumbers }: ClockSettings) => {
-          setClockSettings({ theme, showNumbers });
+        updateSettings: ({ theme, showNumbers, darkMode }: ClockSettings) => {
+          const updated = { theme, showNumbers, darkMode };
+          setClockSettings(updated);
+          applyDarkMode(darkMode);
           localStorage.setItem(
             "clockSettings",
             JSON.stringify({
               clockTheme: theme,
               showNumbers: showNumbers,
+              darkMode: darkMode,
             })
           );
         },

@@ -89,7 +89,7 @@ function App() {
   };
 
   return (
-    <div className="flex flex-col min-h-full bg-blue-950 ">
+    <div className="flex flex-col min-h-full bg-slate-100 dark:bg-blue-950">
       <SettingsProvider>
         <Navbar addClock={addClock}></Navbar>
         <div className="flex justify-center h-8">
@@ -108,9 +108,9 @@ function App() {
             loadingClockId={loadingClockId}
           />
         </div>
-        <footer className="py-3 text-center text-xs text-slate-500">
+        <footer className="py-3 text-center text-xs text-slate-400 dark:text-slate-500">
           © {new Date().getFullYear()} Timezone Clock &nbsp;·&nbsp;{" "}
-          <a href="/privacy.html" className="hover:text-slate-400 transition-colors">
+          <a href="/privacy.html" className="hover:text-slate-600 dark:hover:text-slate-400 transition-colors">
             Privacy Policy
           </a>
         </footer>

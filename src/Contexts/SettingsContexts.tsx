@@ -6,6 +6,7 @@ const defaultSettings: Settings = {
   clockSettings: {
     theme: clockPhases[0],
     showNumbers: false,
+    darkMode: true,
   },
   updateSettings: null,
 };

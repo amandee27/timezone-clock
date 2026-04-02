@@ -14,8 +14,8 @@ export function ClockOuterContainer({
   return (
     <div className="group sm:scale-75 md:scale-75 lg:scale-75">
       <div
-        className={`rounded-xl group-hover:shadow-lg group-hover:bg-gray-500/20 transition-all ${
-          loading && loadingClockId === timezone.id ? "bg-gray-500/20" : ""
+        className={`rounded-xl group-hover:shadow-lg group-hover:bg-slate-200 dark:group-hover:bg-gray-500/20 transition-all ${
+          loading && loadingClockId === timezone.id ? "bg-slate-200 dark:bg-gray-500/20" : ""
         }`}
       >
         {children}

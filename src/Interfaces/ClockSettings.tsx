@@ -8,4 +8,5 @@ export interface Settings {
 export interface ClockSettings {
   theme: ClockPhase;
   showNumbers: boolean;
+  darkMode: boolean;
 }

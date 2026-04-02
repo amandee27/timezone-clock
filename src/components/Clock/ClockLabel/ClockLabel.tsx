@@ -23,12 +23,12 @@ const ClockLabel: React.FC<ClockLabelProps> = ({
 
   return (
     <div className="text-center select-none">
-      <h1 className="text-l font-semibold text-stone-50 mt-4">{label}</h1>
-      <p className="text-stone-50">
+      <h1 className="text-l font-semibold text-slate-700 dark:text-stone-50 mt-4">{label}</h1>
+      <p className="text-slate-700 dark:text-stone-50">
         {relativeDay}
         {offset} {offset === "1" || offset === "-1" ? "hr" : "hrs"}
       </p>
-      <p className="text-stone-50"></p>
+      <p className="text-slate-700 dark:text-stone-50"></p>
     </div>
   );
 };
