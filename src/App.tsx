@@ -1,10 +1,9 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import "./App.css";
 import Navbar from "./components/Navbar/Navbar";
 import Notification from "./components/Modal/Notification";
 import ClockGrid from "./components/ClockGrid/ClockGrid";
 import { CountryTimeStamp } from "./Interfaces/CountryTimeStamp";
-import SettingsProvider from "./Contexts/SettingsProvider";
 import { useDispatch, useSelector } from "react-redux";
 import type { AppState } from "./store.tsx";
 import {
@@ -12,6 +11,7 @@ import {
   removeTimezone,
   swapTomezones,
 } from "./slices/clockStateSlice.tsx";
+import SettingsContext from "./Contexts/SettingsContexts";
 
 function App() {
   const timezoneList = useSelector<AppState>(
@@ -22,6 +22,8 @@ function App() {
   const [notification, setNotification] = useState<null | string>(null);
   const [loading, setLoading] = useState(false);
   const [loadingClockId, setLoadingClockId] = useState("");
+  const settings = useContext(SettingsContext);
+  const background = settings.clockSettings.theme.value.background;
 
   useEffect(() => {
     const interval = setInterval(updateTime, 1000);
@@ -89,32 +91,30 @@ function App() {
   };
 
   return (
-    <div className="flex flex-col min-h-full bg-slate-100 dark:bg-blue-950">
-      <SettingsProvider>
-        <Navbar addClock={addClock}></Navbar>
-        <div className="flex justify-center h-8">
-          {notification && (
-            <Notification notification={notification}></Notification>
-          )}
-        </div>
+    <div className={`flex flex-col min-h-full transition-colors duration-300 ${background}`}>
+      <Navbar addClock={addClock}></Navbar>
+      <div className="flex justify-center h-8">
+        {notification && (
+          <Notification notification={notification}></Notification>
+        )}
+      </div>
 
-        <div className="flex-1 p-4">
-          <ClockGrid
-            timeZoneList={timezoneList as CountryTimeStamp[]}
-            currentDateTime={currentDateTime}
-            deleteClock={deleteClock}
-            swapClocks={swapClocks}
-            loading={loading}
-            loadingClockId={loadingClockId}
-          />
-        </div>
-        <footer className="py-3 text-center text-xs text-slate-400 dark:text-slate-500">
-          © {new Date().getFullYear()} Timezone Clock &nbsp;·&nbsp;{" "}
-          <a href="/privacy.html" className="hover:text-slate-600 dark:hover:text-slate-400 transition-colors">
-            Privacy Policy
-          </a>
-        </footer>
-      </SettingsProvider>
+      <div className="flex-1 p-4">
+        <ClockGrid
+          timeZoneList={timezoneList as CountryTimeStamp[]}
+          currentDateTime={currentDateTime}
+          deleteClock={deleteClock}
+          swapClocks={swapClocks}
+          loading={loading}
+          loadingClockId={loadingClockId}
+        />
+      </div>
+      <footer className="py-3 text-center text-xs text-slate-400 dark:text-slate-500">
+        © {new Date().getFullYear()} Timezone Clock &nbsp;·&nbsp;{" "}
+        <a href="/privacy.html" className="hover:text-slate-600 dark:hover:text-slate-400 transition-colors">
+          Privacy Policy
+        </a>
+      </footer>
     </div>
   );
 }

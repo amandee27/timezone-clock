@@ -12,6 +12,7 @@ export interface ClockTheme {
     numbers: string;
     marks: string;
     clockFace: string;
+    background: string;
   };
 }
 
@@ -31,6 +32,7 @@ export const clockPhases: ClockTheme[] = [
       marks:
         "border-slate-700 text-slate-700 dark:border-white dark:text-white border-t-6 border-solid",
       clockFace: "bg-blue-100 dark:bg-blue-950",
+      background: "bg-blue-50 dark:bg-blue-950",
     },
   },
   {
@@ -47,6 +49,7 @@ export const clockPhases: ClockTheme[] = [
       numbers: "bg-black",
       marks: "border-black text-black border-t-6 border-solid",
       clockFace: "bg-white dark:bg-white/50",
+      background: "bg-slate-50 dark:bg-slate-900",
     },
   },
   {
@@ -64,6 +67,7 @@ export const clockPhases: ClockTheme[] = [
       marks:
         "border-stone-600 text-stone-600 dark:border-black dark:text-black border-t-6 border-solid",
       clockFace: "bg-amber-50 dark:bg-white",
+      background: "bg-amber-50 dark:bg-stone-900",
     },
   },
   {
@@ -81,6 +85,7 @@ export const clockPhases: ClockTheme[] = [
       marks:
         "border-blue-900 text-blue-900 dark:border-amber-400 dark:text-amber-400 border-t-6 border-solid",
       clockFace: "bg-slate-200 dark:bg-slate-800",
+      background: "bg-slate-100 dark:bg-slate-900",
     },
   },
   {
@@ -98,6 +103,7 @@ export const clockPhases: ClockTheme[] = [
       marks:
         "border-stone-500 text-stone-500 dark:border-stone-400 dark:text-stone-400 border-t-6 border-solid",
       clockFace: "bg-stone-100 dark:bg-stone-800",
+      background: "bg-stone-50 dark:bg-stone-900",
     },
   },
 ];

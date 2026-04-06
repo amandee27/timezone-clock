@@ -6,4 +6,5 @@ export interface ClockThemeValue {
   numbers: string;
   marks: string;
   clockFace: string;
+  background: string;
 }

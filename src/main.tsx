@@ -5,6 +5,7 @@ import App from "./App.tsx";
 import { Provider } from "react-redux";
 import { store } from "./store.tsx";
 import { saveState } from "./localStorage.tsx";
+import SettingsProvider from "./Contexts/SettingsProvider.tsx";
 
 store.subscribe(() => {
   saveState(store.getState().clockState.timezoneList);
@@ -13,7 +14,9 @@ store.subscribe(() => {
 createRoot(document.getElementById("root")!).render(
   <BrowserRouter>
     <Provider store={store}>
-      <App />
+      <SettingsProvider>
+        <App />
+      </SettingsProvider>
     </Provider>
   </BrowserRouter>
 );
