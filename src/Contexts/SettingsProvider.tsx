@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import SettingsContext from "./SettingsContexts";
 import { ClockSettings } from "../Interfaces/ClockSettings";
 import { defaultSettings } from "./SettingsContexts";
+import { clockPhases } from "../data/clockPhases";
 
 function SettingsProvider({ children }: { children: React.ReactNode }) {
   const [clockSettings, setClockSettings] = useState<ClockSettings>(
@@ -13,8 +14,11 @@ function SettingsProvider({ children }: { children: React.ReactNode }) {
     const clockSettingsObj = clockSettingItem && JSON.parse(clockSettingItem);
 
     if (clockSettingsObj) {
+      const savedKey = clockSettingsObj["clockThemeKey"];
+      const theme =
+        clockPhases.find((t) => t.key === savedKey) ?? clockPhases[0];
       const loaded: ClockSettings = {
-        theme: clockSettingsObj["clockTheme"],
+        theme,
         showNumbers: clockSettingsObj["showNumbers"],
         darkMode: clockSettingsObj["darkMode"] ?? true,
       };
@@ -24,7 +28,7 @@ function SettingsProvider({ children }: { children: React.ReactNode }) {
       localStorage.setItem(
         "clockSettings",
         JSON.stringify({
-          clockTheme: clockSettings.theme,
+          clockThemeKey: clockSettings.theme.key,
           showNumbers: clockSettings.showNumbers,
           darkMode: clockSettings.darkMode,
         })
@@ -52,7 +56,7 @@ function SettingsProvider({ children }: { children: React.ReactNode }) {
           localStorage.setItem(
             "clockSettings",
             JSON.stringify({
-              clockTheme: theme,
+              clockThemeKey: theme.key,
               showNumbers: showNumbers,
               darkMode: darkMode,
             })
