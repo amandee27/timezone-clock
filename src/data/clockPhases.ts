@@ -67,7 +67,7 @@ export const clockPhases: ClockTheme[] = [
       marks:
         "border-stone-600 text-stone-600 dark:border-black dark:text-black border-t-6 border-solid",
       clockFace: "bg-amber-50 dark:bg-white",
-      background: "bg-amber-50 dark:bg-stone-900",
+      background: "bg-rose-50 dark:bg-stone-900",
     },
   },
   {
