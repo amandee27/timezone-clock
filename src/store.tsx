@@ -1,16 +1,20 @@
 import { configureStore } from "@reduxjs/toolkit";
 import clockStateSlice from "./slices/clockStateSlice.tsx";
-import { loadState } from "./localStorage.tsx";
+import { loadStateNew } from "./localStorage.tsx";
 
 export type AppState = {
   clockState: ReturnType<typeof clockStateSlice>;
 };
 
-const persistedState = loadState();
+async function initializeStore() {
+  const persistedState = await loadStateNew();
 
-export const store = configureStore<AppState>({
-  reducer: {
-    clockState: clockStateSlice,
-  },
-  preloadedState: persistedState,
-});
+  return configureStore<AppState>({
+    reducer: {
+      clockState: clockStateSlice,
+    },
+    preloadedState: persistedState,
+  });
+}
+
+export { initializeStore };
