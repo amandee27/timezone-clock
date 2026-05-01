@@ -5,7 +5,7 @@ import Notification from "./components/Modal/Notification";
 import ClockGrid from "./components/ClockGrid/ClockGrid";
 import { CountryTimeStamp } from "./Interfaces/CountryTimeStamp";
 import { useDispatch, useSelector } from "react-redux";
-import type { AppState } from "./store.tsx";
+import type { AppState } from "./Interfaces/AppState";
 import {
   setTimezone,
   removeTimezone,
@@ -14,8 +14,9 @@ import {
 import SettingsContext from "./Contexts/SettingsContexts";
 
 function App() {
+  // Read state from the Redux store using useSelector
   const timezoneList = useSelector<AppState>(
-    (state) => state.clockState.timezoneList
+    (state) => state.clockState.timezoneList,
   );
   const dispatch = useDispatch();
   const [currentDateTime, setCurrentDateTime] = useState(new Date());
@@ -66,7 +67,7 @@ function App() {
             value: timezone.value ?? "",
             label: timezone.label ?? "",
             offset: timezone.offset ?? "",
-          })
+          }),
         );
       }
 
@@ -91,7 +92,9 @@ function App() {
   };
 
   return (
-    <div className={`flex flex-col min-h-full transition-colors duration-300 ${background}`}>
+    <div
+      className={`flex flex-col min-h-full transition-colors duration-300 ${background}`}
+    >
       <Navbar addClock={addClock}></Navbar>
       <div className="flex justify-center h-8">
         {notification && (
@@ -111,7 +114,10 @@ function App() {
       </div>
       <footer className="py-3 text-center text-xs text-slate-400 dark:text-slate-500">
         © {new Date().getFullYear()} Timezone Clock &nbsp;·&nbsp;{" "}
-        <a href="/privacy.html" className="hover:text-slate-600 dark:hover:text-slate-400 transition-colors">
+        <a
+          href="/privacy.html"
+          className="hover:text-slate-600 dark:hover:text-slate-400 transition-colors"
+        >
           Privacy Policy
         </a>
       </footer>

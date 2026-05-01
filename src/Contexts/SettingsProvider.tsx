@@ -1,40 +1,24 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import SettingsContext from "./SettingsContexts";
 import { ClockSettings } from "../Interfaces/ClockSettings";
-import { defaultSettings } from "./SettingsContexts";
-import { clockPhases } from "../data/clockPhases";
+import { useDispatch, useSelector } from "react-redux";
+import { AppState } from "../Interfaces/AppState";
+import {
+  ClockSettingsState,
+  updateSettings,
+} from "../slices/clockSettingsSlice";
 
 function SettingsProvider({ children }: { children: React.ReactNode }) {
-  const [clockSettings, setClockSettings] = useState<ClockSettings>(
-    defaultSettings.clockSettings
+  const clockSettings = useSelector<AppState, ClockSettingsState>(
+    (state) => state.clockSettings,
   );
+  const dispatch = useDispatch();
 
+  /**No need to set default,  because redux store will initialize with default settings,
+   * and this useEffect will load from storage on app start. If you want to reset to default,
+   * you can dispatch updateSettings with default values. Need to apply dark mode on initial load.*/
   useEffect(() => {
-    const clockSettingItem = localStorage.getItem("clockSettings");
-    const clockSettingsObj = clockSettingItem && JSON.parse(clockSettingItem);
-
-    if (clockSettingsObj) {
-      const savedKey = clockSettingsObj["clockThemeKey"];
-      const theme =
-        clockPhases.find((t) => t.key === savedKey) ?? clockPhases[0];
-      const loaded: ClockSettings = {
-        theme,
-        showNumbers: clockSettingsObj["showNumbers"],
-        darkMode: clockSettingsObj["darkMode"] ?? true,
-      };
-      setClockSettings(loaded);
-      applyDarkMode(loaded.darkMode);
-    } else {
-      localStorage.setItem(
-        "clockSettings",
-        JSON.stringify({
-          clockThemeKey: clockSettings.theme.key,
-          showNumbers: clockSettings.showNumbers,
-          darkMode: clockSettings.darkMode,
-        })
-      );
-      applyDarkMode(clockSettings.darkMode);
-    }
+    applyDarkMode(clockSettings.settings.darkMode);
   }, []);
 
   const applyDarkMode = (isDark: boolean) => {
@@ -48,19 +32,12 @@ function SettingsProvider({ children }: { children: React.ReactNode }) {
   return (
     <SettingsContext
       value={{
-        clockSettings,
+        clockSettings: clockSettings.settings,
         updateSettings: ({ theme, showNumbers, darkMode }: ClockSettings) => {
+          // Dispatch an action to update the Redux store with the new settings
           const updated = { theme, showNumbers, darkMode };
-          setClockSettings(updated);
+          dispatch(updateSettings(updated));
           applyDarkMode(darkMode);
-          localStorage.setItem(
-            "clockSettings",
-            JSON.stringify({
-              clockThemeKey: theme.key,
-              showNumbers: showNumbers,
-              darkMode: darkMode,
-            })
-          );
         },
       }}
     >

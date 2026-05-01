@@ -10,7 +10,7 @@ import SettingsProvider from "./Contexts/SettingsProvider.tsx";
 (async () => {
   const store = await initializeStore();
   store.subscribe(() => {
-    saveState(store.getState().clockState.timezoneList);
+    saveState(store.getState());
   });
   createRoot(document.getElementById("root")!).render(
     <BrowserRouter>
